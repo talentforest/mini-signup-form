@@ -56,10 +56,38 @@ function showProperMessage($msg) {
     }
 }
 
+// 4. 입력 확인 모달 창 구현
 const $submit = document.getElementById('submit')
+const $modal = document.getElementById('modal')
+const $confirmId = document.getElementById('confirm-id')
+const $confirmPw = document.getElementById('confirm-pw')
+
 $submit.addEventListener('click', (event) => {
     event.preventDefault()
     checkValidation($id, $idMsg)
     checkValidation($pw, $pwMsg)
     checkValidation($pwCheck, $pwCheckMsg)
+
+    const allInputIsValid =
+        $idMsg.innerText === '' &&
+        $pwMsg.innerText === '' &&
+        $pwCheckMsg.innerText === ''
+
+    if (allInputIsValid) {
+        $confirmId.innerText = $id.value
+        $confirmPw.innerText = $pw.value
+        $modal.showModal()
+    }
+})
+
+const $cancelBtn = document.getElementById('cancel-btn')
+const $approveBtn = document.getElementById('approve-btn')
+
+$cancelBtn.addEventListener('click', () => {
+    $modal.close()
+})
+
+$approveBtn.addEventListener('click', () => {
+    $modal.close()
+    alert('가입되었습니다 🥳')
 })
