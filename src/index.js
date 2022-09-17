@@ -64,10 +64,6 @@ const $confirmPw = document.getElementById('confirm-pw')
 
 $submit.addEventListener('click', (event) => {
     event.preventDefault()
-    checkValidation($id, $idMsg)
-    checkValidation($pw, $pwMsg)
-    checkValidation($pwCheck, $pwCheckMsg)
-
     const allInputIsValid =
         $idMsg.innerText === '' &&
         $pwMsg.innerText === '' &&
@@ -91,3 +87,33 @@ $approveBtn.addEventListener('click', () => {
     $modal.close()
     alert('가입되었습니다 🥳')
 })
+
+// 5. 폰트 사이즈 조절
+const $increaseFontBtn = document.getElementById('increase-font-btn')
+const $decreaseFontBtn = document.getElementById('decrease-font-btn')
+
+const $html = document.documentElement
+const MAX_FONT_SIZE = 20
+const MIN_FONT_SIZE = 12
+
+const getHtmlFontSize = () => {
+    return parseFloat(window.getComputedStyle($html).fontSize)
+}
+
+$increaseFontBtn.addEventListener('click', () => {
+    onClickFontSizeControl('increase')
+})
+
+$decreaseFontBtn.addEventListener('click', () => {
+    onClickFontSizeControl('decrease')
+})
+
+const onClickFontSizeControl = (controlType) => {
+    const currentFontSize = getHtmlFontSize()
+    let newFontSize =
+        controlType === 'increase' ? currentFontSize + 1 : currentFontSize - 1
+    $html.style.fontSize = newFontSize
+
+    $increaseFontBtn.disabled = newFontSize >= MAX_FONT_SIZE
+    $decreaseFontBtn.disabled = newFontSize <= MIN_FONT_SIZE
+}
